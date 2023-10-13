@@ -17,6 +17,7 @@ driver.register_adapter(ConsoleAdapter)
 #nonebot.load_plugin(Path("run\\test.py"))
 nonebot.load_plugin(Path("run/aiReply.py"))
 nonebot.load_plugin(Path("run/singleModule.py"))
+nonebot.load_plugin(Path("run/userSign.py"))
 
 if __name__ == "__main__":
     nonebot.run()
