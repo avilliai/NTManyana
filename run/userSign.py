@@ -39,6 +39,7 @@ with open('config/settings.yaml', 'r', encoding='utf-8') as f:
     result = yaml.load(f.read(), Loader=yaml.FullLoader)
 master=result.get("master")
 mainGroup = int(result.get("mainGroup"))
+signMode=result.get("signMode")
 logger.info("签到部分启动完成")
 with open('data/userData.yaml', 'r', encoding='utf-8') as file:
     data = yaml.load(file, Loader=yaml.FullLoader)
@@ -198,28 +199,55 @@ async def signPicMaker(url,id,weather,nowTime,times,exp,startTime):
     fileName=await userAvatarDownLoad(url)
     # 制底图
     layer = Image.open(fileName)
+    if signMode==0:
+        path="data/pictures/sign_backGround/ba/"+random.choice(os.listdir("data/pictures/sign_backGround"))
+        bg = Image.open(path)
+        # merge = Image.blend(st, st2, 0.5)
+        bg.paste(layer, (120, 147))
+        fileName='data/pictures/cache/'+random_str()+".png"
+        bg.save(fileName)
+        imageFile = fileName
+        # 导入数据
+        tp = Image.open(imageFile)
+        font = ImageFont.truetype('data/fonts/H-TTF-BuMing-B-2.ttf', 110)
+        draw = ImageDraw.Draw(tp)
+        font = ImageFont.truetype('data/fonts/Caerulaarbor.ttf', 115)
+        draw.text((423, 743), id, (12, 0, 6), font=font)
+        font = ImageFont.truetype('data/fonts/H-TTF-BuMing-B-2.ttf', 73)
+        draw.text((2000, 716), weather, (12, 0, 6), font=font)
+        draw.text((509, 1419), '当前exp:' + exp, (12, 0, 6), font=font)
+        font = ImageFont.truetype('data/fonts/Caerulaarbor.ttf', 73)
+        draw.text((509, 1090), nowTime.replace("-","a").replace(":","b"), (12, 0, 6), font=font)
+        draw.text((509, 1243), times.replace("-","a").replace(":","b"), (12, 0, 6), font=font)
+        draw.text((1395, 1188), startTime.replace("-","a").replace(":","b"), (12, 0, 6), font=font)
+        fileName = 'data/pictures/cache/' + random_str() + ".png"
+    elif signMode==1:
+        path = "data/pictures/sign_backGround/ark/x.png"
+        bg = Image.open(path)
+        # merge = Image.blend(st, st2, 0.5)
+        bg.paste(layer, (190, 210))
+        fileName = 'data/pictures/cache/' + random_str() + ".png"
+        bg.save(fileName)
+        imageFile = fileName
+        # 导入数据
+        tp = Image.open(imageFile)
 
-    path="data/pictures/sign_backGround/"+random.choice(os.listdir("data/pictures/sign_backGround"))
-    bg = Image.open(path)
-    # merge = Image.blend(st, st2, 0.5)
-    bg.paste(layer, (120, 147))
-    fileName='data/pictures/cache/'+random_str()+".png"
-    bg.save(fileName)
-    imageFile = fileName
-    # 导入数据
-    tp = Image.open(imageFile)
-    font = ImageFont.truetype('data/fonts/H-TTF-BuMing-B-2.ttf', 110)
-    draw = ImageDraw.Draw(tp)
-    font = ImageFont.truetype('data/fonts/Caerulaarbor.ttf', 115)
-    draw.text((423, 743), id, (12, 0, 6), font=font)
-    font = ImageFont.truetype('data/fonts/H-TTF-BuMing-B-2.ttf', 73)
-    draw.text((2000, 716), weather, (12, 0, 6), font=font)
-    draw.text((509, 1419), '当前exp:' + exp, (12, 0, 6), font=font)
-    font = ImageFont.truetype('data/fonts/Caerulaarbor.ttf', 73)
-    draw.text((509, 1090), nowTime.replace("-","a").replace(":","b"), (12, 0, 6), font=font)
-    draw.text((509, 1243), times.replace("-","a").replace(":","b"), (12, 0, 6), font=font)
-    draw.text((1395, 1188), startTime.replace("-","a").replace(":","b"), (12, 0, 6), font=font)
-    fileName = 'data/pictures/cache/' + random_str() + ".png"
+        font = ImageFont.truetype('data/fonts/Caerulaarbor.ttf', 110)
+        draw = ImageDraw.Draw(tp)
+        font = ImageFont.truetype('data/fonts/H-TTF-BuMing-B-2.ttf', 73)
+        draw.text((2000, 716), weather, (12, 0, 6), font=font)
+        draw.text((400, 1200), 'exp:', (12, 0, 6), font=font)
+        draw.text((400, 900), "nowtime:", (12, 0, 6), font=font)
+        draw.text((400, 1050), "totaltimes:", (12, 0, 6), font=font)
+        draw.text((400, 1350), "starttime:", (12, 0, 6), font=font)
+        font = ImageFont.truetype('data/fonts/Caerulaarbor.ttf', 115)
+        draw.text((400, 700), id, (12, 0, 6), font=font)
+        font = ImageFont.truetype('data/fonts/Caerulaarbor.ttf', 73)
+        draw.text((799, 1190), exp, (12, 0, 6), font=font)
+        draw.text((799, 890), nowTime.replace("-", "a").replace(":", "b"), (12, 0, 6), font=font)
+        draw.text((799, 1040), times.replace("-", "a").replace(":", "b"), (12, 0, 6), font=font)
+        draw.text((799, 1340), startTime.replace("-", "a").replace(":", "b"), (12, 0, 6), font=font)
+        fileName = 'data/pictures/cache/' + random_str() + ".png"
     tp.save(fileName)
     return fileName
 

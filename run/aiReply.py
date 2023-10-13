@@ -270,60 +270,7 @@ try:
     subprocess.Popen(["pandora", "-t", "config/token.txt","-s", "127.0.0.1:23459", "-p", proxy])
 except:
     logger.error("pandora启动失败")
-'''# print(trustUser)
-@temple.handle()
-async def showCharacter(bot: Bot, event: MessageEvent):
-    st1=""
-    for isa in allcharacters:
-        st1+=isa+"\n"
-    await bot.send(event,"对话可用角色模板：\n"+st1+"\n发送：设定#角色名 以设定角色")
 
-@setCharacter.handle()
-async def handle_function(args: Message = CommandArg()):
-    global chatGLMCharacters,userdict
-    if location := args.extract_plain_text():
-        if location in allcharacters:
-            meta1=allcharacters.get(location)
-
-            try:
-                setName = userdict.get( ).get("userName")
-            except:
-                setName = event.sendMemberName
-            if setName == None:
-                setName = event.sendMemberName
-            meta1["user_name"] = meta1.get("user_name").replace("指挥", setName)
-            meta1["user_info"] = meta1.get("user_info").replace("指挥", setName).replace("yucca", botName)
-            meta1["bot_info"] = meta1.get("bot_info").replace("指挥", setName).replace("yucca", botName)
-            meta1["bot_name"] = botName
-
-            chatGLMCharacters[event.senderUin] =meta1
-            logger.info("当前：",chatGLMCharacters)
-            with open('data/chatGLMCharacters.yaml', 'w', encoding="utf-8") as file:
-                yaml.dump(chatGLMCharacters, file, allow_unicode=True)
-            await bot.send(event,"设定成功")
-        else:
-            await bot.send(event,"不存在的角色")
-
-@bot.on(Startup)
-async def upDate(event: Startup):
-    while True:
-        await sleep(360)
-        with open('config/chatGLM.yaml', 'r', encoding='utf-8') as f:
-            result222 = yaml.load(f.read(), Loader=yaml.FullLoader)
-        global chatGLMapikeys
-        chatGLMapikeys = result222
-        with open('data/userData.yaml', 'r', encoding='utf-8') as file:
-            data = yaml.load(file, Loader=yaml.FullLoader)
-        global trustUser
-        global userdict
-        userdict = data
-        trustUser = []
-        for i in userdict.keys():
-            data = userdict.get(i)
-            times = int(str(data.get('sts')))
-            if times > trustDays:
-                trustUser.append(str(i))
-        logger.info('已读取信任用户' + str(len(trustUser)) + '个')'''
 
 
 #群内chatGLM回复

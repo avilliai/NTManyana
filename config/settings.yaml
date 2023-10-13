@@ -1,6 +1,7 @@
 master: 1840094972  #填你的QQ
 mainGroup: 628763673  #主群
 botName: yucca  #bot名字
+signMode: 0  #签到图片设置，0为档卫兵主题，1为皱皮主题
 signTimes: 3    # 签到几天后可以邀请加群
 trustDays: 28  #签到几天后算信任用户
 autoallowFriend: False  #是否自动允许好友申请
