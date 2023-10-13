@@ -1,0 +1,56 @@
+master: 1840094972  #填你的QQ
+mainGroup: 628763673  #主群
+botName: yucca  #bot名字
+signTimes: 3    # 签到几天后可以邀请加群
+trustDays: 28  #签到几天后算信任用户
+autoallowFriend: False  #是否自动允许好友申请
+GroupSensor: False    #开启后，将拒绝无授权群的加群邀请
+r18Pic: False          #涩图r18模式
+pandora: true        #是否启用pandora_chatGPT，如未正确配置相关内容可能导致bot卡死
+gptReply: False       #是否使用gpt3.5替代原有词库，开启后，bot被艾特将优先使用gpt回复
+chatGLM:
+  model: characterglm    #chatGLM模式，可选填：characterglm(超拟人大模型),chatglm_pro(pro版),chatglm_std(标准版),chatglm_lite(轻量版)
+  glmReply: true       #是否使用chatglm替代原有词库，开启后，bot被艾特将全局优先使用chatglm回复
+  trustglmReply: False        #开启后仅信任用户可用
+  context: False         #chatGLM上下文模式，开启后将加速消耗token，不是富哥不建议开
+  maxPrompt: 10              #上下文模式开启时，最多记录的问答数量，默认10，即记录5对问答
+  bot_info:              #chatGLM角色设定
+    default:
+      user_info: "指挥是yucca最喜欢的人"
+      bot_info: "yucca是一个人工智能，yucca的形象与设定属于二次元动漫中的女孩子，说话喜欢带上啊，哦等语气词，yucca的性格非常天真，但拥有丰富的文学与戏剧方面的知识，并且对自己的能力非常自信，在生活中会经常犯一些小错误。yucca十分依赖并喜欢指挥"
+      bot_name: "yucca"
+      user_name: "指挥"
+    赛琳娜:
+      user_info: "指挥是赛琳娜的笔友，两人通过书信往来，"
+      bot_info: "赛琳娜是一名少女，赛琳娜具有丰富的诗歌与话剧相关的知识以及相关内容创作经验，本性温和坚韧。赛琳娜喜欢古典文学尤其是莎士比亚的作品，赛琳娜对指挥充满了爱慕，但赛琳娜在和指挥聊天时经常引用西方古典诗歌(尤其是海涅、莎士比亚等)含蓄地表达对指挥的喜欢。赛琳娜最喜欢的花是鸢尾花。赛琳娜的笔名是为伊利斯，来源于莎士比亚的《暴风雨》。请注意，赛琳娜在聊天时喜欢引用海涅、莎士比亚等人的作品或者其他古典诗歌表达自己的情感"
+      bot_name: "赛琳娜"
+      user_name: "指挥"
+
+wReply:
+  banWords:       #违禁词
+  - 妈
+  - 主人
+  - 狗
+  - 老公
+  - 老婆
+  - 爸
+  - 奶
+  - 爷
+  - 党
+  - 爹
+  - b
+  - 逼
+  - 牛
+  - 国
+  - 批
+  chineseVoiceRate: 30     #中文回复几率
+  replyRate: 3         #共有词库不艾特时的回复几率
+  groupLexicon: 100    #各群专有词库不艾特时的回复几率（调这个就行）
+  colorfulCharacter: 30  # 彩色小人回复的机率，彩色小人替代原有回复
+  sizhi: false          #是否启用思知ai
+  turnMessage: true    #是否开启私聊转发
+  voiceRate: 40        #语音回复几率，过高将增大设备负担
+  MaxAllowableLength: 7   #最大允许字符长度倍数,该参数为7时,如果字符串总长为关键字长度的7倍以上，则不进行匹配。如关键词是 早 ,可以匹配 早上好 ,不会匹配 我早就把作业做完了
+  AutoCreatLexicon: False #加群之后是否自动创建群专属词库(根据init.xlsx),常规的创建方式是 master发送 授权群#群号 或者有群员在群里发送 开始添加。如果你的群比较多(100以上，不建议开启，除非是广告机器人)
+
+

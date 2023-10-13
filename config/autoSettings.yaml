@@ -1,0 +1,17 @@
+banGroups:
+- 2132321
+banUser:
+- 1
+- 4564949845
+trustGroups:
+  - 699455559
+moderate:
+  banTime: 300
+  banWords:
+    '60844343475':
+    - 斯卡蒂
+  groups:
+    '69945555439': 1
+  apiKeys:
+    '699455559': fadfasfasf
+  threshold: 40
