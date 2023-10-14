@@ -96,46 +96,49 @@ async def handle_group_message(bot: Bot, event: MessageEvent):
 @sign2.handle()
 async def handle_group_message(bot: Bot, event: MessageEvent):
     global newUser
-    if str(int(event.senderUin)) in newUser.keys():
-        newUser.pop(str(int(event.senderUin)))
-        logger.info("用户+1："+str(event.sendMemberName)+" ("+str(int(event.senderUin))+")")
-        time114514 = str(datetime.datetime.now().strftime('%Y-%m-%d'))
-        time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        try:
-            city = str(event.get_plaintext()).split('#')[1]
+    try:
+        if str(int(event.senderUin)) in newUser.keys():
+            newUser.pop(str(int(event.senderUin)))
+            logger.info("用户+1："+str(event.sendMemberName)+" ("+str(int(event.senderUin))+")")
+            time114514 = str(datetime.datetime.now().strftime('%Y-%m-%d'))
+            time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            try:
+                city = str(event.get_plaintext()).split('#')[1]
 
-            await bot.send(event, '正在验证城市......，')
-            weather = await querys(city,api_KEY)
-            await bot.send(event, '成功')
-            logger.info("验证城市通过")
-        except:
-            await bot.send(event,'error，默认执行 注册#通辽 ,随后可发送 修改城市#城市名 进行地区修改')
-            city='通辽'
-            weather = await querys(city,api_KEY)
-            logger.info("城市验证未通过，送进通辽当可汗子民")
-        global userdict
-        userdict[str(int(event.senderUin))] = {"city": city, "st": time, "sts": "1", "exp": "0",
-                                          "id": random_str(6,'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'),'ok':time114514}
-        data = userdict.get(str(int(event.senderUin)))
-        city = data.get('city')
-        startTime = data.get('st')
-        times = str(int(data.get('sts')) + 1)
-        exp = str(int(data.get('exp')) + random.randint(1, 20))
-        nowTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        id = data.get('id')
-        data['sts'] = times
-        data['exp'] = exp
-        data['userName']=event.sendMemberName
-        userdict[str(int(event.senderUin))] = data
-        logger.info("更新用户数据中")
-        with open('data/userData.yaml', 'w', encoding="utf-8") as file:
-            yaml.dump(userdict, file, allow_unicode=True)
+                await bot.send(event, '正在验证城市......，')
+                weather = await querys(city,api_KEY)
+                await bot.send(event, '成功')
+                logger.info("验证城市通过")
+            except:
+                await bot.send(event,'error，默认执行 注册#通辽 ,随后可发送 修改城市#城市名 进行地区修改')
+                city='通辽'
+                weather = await querys(city,api_KEY)
+                logger.info("城市验证未通过，送进通辽当可汗子民")
+            global userdict
+            userdict[str(int(event.senderUin))] = {"city": city, "st": time, "sts": "1", "exp": "0",
+                                              "id": random_str(6,'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'),'ok':time114514}
+            data = userdict.get(str(int(event.senderUin)))
+            city = data.get('city')
+            startTime = data.get('st')
+            times = str(int(data.get('sts')) + 1)
+            exp = str(int(data.get('exp')) + random.randint(1, 20))
+            nowTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            id = data.get('id')
+            data['sts'] = times
+            data['exp'] = exp
+            data['userName']=event.sendMemberName
+            userdict[str(int(event.senderUin))] = data
+            logger.info("更新用户数据中")
+            with open('data/userData.yaml', 'w', encoding="utf-8") as file:
+                yaml.dump(userdict, file, allow_unicode=True)
 
-        imgurl = get_user_image_url(int(event.senderUin))
-        logger.info("制作签到图片....")
-        path=await signPicMaker(imgurl,id,weather,nowTime,times,exp,startTime)
-        logger.info("完成，发送签到图片")
-        await bot.send_group_message(event.scene, MessageSegment.image(Path(path)))
+            imgurl = get_user_image_url(int(event.senderUin))
+            logger.info("制作签到图片....")
+            path=await signPicMaker(imgurl,id,weather,nowTime,times,exp,startTime)
+            logger.info("完成，发送签到图片")
+            await bot.send_group_message(event.scene, MessageSegment.image(Path(path)))
+    except:
+        pass
 
 
 @permit.handle()
@@ -216,7 +219,6 @@ async def signPicMaker(url,id,weather,nowTime,times,exp,startTime):
         font = ImageFont.truetype('data/fonts/H-TTF-BuMing-B-2.ttf', 73)
         draw.text((2000, 716), weather, (12, 0, 6), font=font)
         draw.text((509, 1419), '当前exp:' + exp, (12, 0, 6), font=font)
-        font = ImageFont.truetype('data/fonts/Caerulaarbor.ttf', 73)
         draw.text((509, 1090), nowTime.replace("-","a").replace(":","b"), (12, 0, 6), font=font)
         draw.text((509, 1243), times.replace("-","a").replace(":","b"), (12, 0, 6), font=font)
         draw.text((1395, 1188), startTime.replace("-","a").replace(":","b"), (12, 0, 6), font=font)

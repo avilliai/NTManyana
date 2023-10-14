@@ -133,15 +133,14 @@ async def meme(bot: Bot, event: MessageEvent):
     la = os.listdir("data/pictures/amm")
     la = "data/pictures/amm/" + random.choice(la)
     logger.info("执行运势查询")
-    await bot.send_group_message(event.scene, MessageSegment.image(Path(la)))
+    await bot.send_group_message(event.scene, (event.sendMemberName+"今天的运势是",MessageSegment.image(Path(la))))
 
 @TodatTarot.handle()
 async def tarotToday(bot: Bot, event: MessageEvent):
     logger.info("获取今日塔罗")
     txt, img = tarotChoice()
     logger.info("成功获取到今日塔罗")
-    await bot.send(event, txt)
-    await bot.send_group_message(event.scene, MessageSegment.image(Path(img)))
+    await bot.send_group_message(event.scene, (txt,MessageSegment.image(Path(img))))
 
 @colorAnime.handle()
 async def tarotToday(bot: Bot, event: MessageEvent):
@@ -372,8 +371,8 @@ async def NasaHelper(bot: Bot, event: MessageEvent):
 
             with open('data/nasaTasks.yaml', 'w', encoding="utf-8") as file:
                 yaml.dump(data, file, allow_unicode=True)
-            await bot.send_group_message(event.scene, MessageSegment.image(Path(filename)))
-            await bot.send(event,txt)
+            await bot.send_group_message(event.scene, (txt,MessageSegment.image(Path(filename))))
+
             #await bot.send(event, (Image(path=filename), txt))
 
         except:
