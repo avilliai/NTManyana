@@ -6,8 +6,13 @@
 下载release的NTM.rar并解压<br>
 ## 文字版
 - 下载NTM.rar
+- 安装压缩包里的QQ
+- 安装[LiteLoaderQQNT](https://chronocat.vercel.app/install/llqqnt)
+- [获取token](https://chronocat.vercel.app/config/)
 - 用管理员身份运行NTM.exe
 - 输入1开始搭建
+- 把获取的token填进NTM/.env
+- 双击main.py
 ## 视频版
 下载HowToUse.mp4以参考<br>
 (HowToUse.mp4中，演示用的设备已经安装了对应的软件，所以跳过了，如果你没装这些软件就不要跳过)
