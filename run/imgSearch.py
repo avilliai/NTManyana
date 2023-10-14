@@ -29,12 +29,14 @@ from nonebot.adapters.red.event import MessageEvent
 from nonebot.adapters.red.message import MessageSegment, Message
 
 #指令区
+from run.aiReply import giveMeLogger
+
 searchImg1=on_fullmatch("搜图")
 searchImg2=on_startswith("") #为了处理 搜图[图片] 和 搜图 两种情况，设置成对所有消息触发
 
 
 #拿数据
-logger=newLogger()
+logger=giveMeLogger()
 logger.info("搜图功能启动完毕")
 with open('config/api.yaml', 'r', encoding='utf-8') as f:
     result = yaml.load(f.read(), Loader=yaml.FullLoader)

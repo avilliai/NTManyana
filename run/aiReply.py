@@ -125,7 +125,7 @@ listen.start()
 temple = on_fullmatch(("角色模板","可用角色模板"), rule=to_me(),  priority=3, block=True)
 setCharacter = on_startswith("设定#",ignorecase=False)
 clearCache=on_fullmatch("/clearGLM")
-chatGLMGroupRep=on_startswith("",rule=to_me(),priority=9, block=False)
+chatGLMGroupRep=on_startswith("",rule=to_me())
 chatGPTReply=on_startswith("/p",ignorecase=False)
 chatGPTReply1=on_startswith("/chat",ignorecase=False)
 xh=on_startswith("/xh")
@@ -139,7 +139,8 @@ try:
 except:
     logger.error("pandora启动失败")
 
-
+def giveMeLogger():
+    return logger
 
 #群内chatGLM回复
 @chatGLMGroupRep.handle()

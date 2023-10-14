@@ -22,6 +22,8 @@ from nonebot.adapters.red.event import MessageEvent
 from nonebot.adapters.red.message import MessageSegment, Message
 from nonebot.rule import to_me, startswith
 #指令区
+from run.aiReply import giveMeLogger
+
 sign=on_fullmatch("签到")
 sign2=on_startswith("")
 permit=on_startswith("授权#")
@@ -34,7 +36,7 @@ changeCity1=on_startswith("修改城市#")
 with open('config/api.yaml', 'r', encoding='utf-8') as f:
     result121 = yaml.load(f.read(), Loader=yaml.FullLoader)
 api_KEY = result121.get("weatherXinZhi")
-logger=newLogger()
+logger=giveMeLogger()
 with open('config/settings.yaml', 'r', encoding='utf-8') as f:
     result = yaml.load(f.read(), Loader=yaml.FullLoader)
 master=result.get("master")

@@ -34,6 +34,7 @@ from nonebot.rule import to_me, startswith
 #指令部分
 from plugins.translater import translate
 from plugins.webScreenShoot import screenshot_to_pdf_and_png
+from run.aiReply import giveMeLogger
 
 getMeme=on_fullmatch("meme")
 yunshi=on_fullmatch("运势")
@@ -59,7 +60,7 @@ honorYou=on_startswith("/奖状")
 ark10=on_fullmatch("方舟十连")
 starRailOrdor=on_fullmatch("星铁十连")
 #拿数据
-logger=newLogger()
+logger=giveMeLogger()
 
 with open('config/api.yaml', 'r', encoding='utf-8') as f:
     result121 = yaml.load(f.read(), Loader=yaml.FullLoader)
