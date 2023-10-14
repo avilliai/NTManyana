@@ -18,7 +18,7 @@ import yaml
 from plugins.RandomStr import random_str
 from plugins.imgSearch import test2, superSearch, test1, test, saucenoS
 
-from plugins.modelsLoader import modelLoader
+
 from plugins.newLogger import newLogger
 from plugins.translater import translate
 from nonebot import on_command, on_fullmatch, on_startswith, on_keyword, on_regex, on_endswith
