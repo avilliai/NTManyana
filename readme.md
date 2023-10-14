@@ -2,6 +2,7 @@
 项目[Manyana](https://github.com/avilliai/Manyana) 的NTQQ对应版本<br>
 基于[chronocat](https://chronocat.vercel.app/) 与 [NoneBot2 Red Protocol适配器](https://github.com/nonebot/adapter-red) 实现<br>
 但目前功能并没有全部转移过来，仅是部分
+- 如果遇到使用问题，请在QQ群628763673反馈
 # 部署
 下载release的NTM.rar并解压<br>
 ## 文字版
