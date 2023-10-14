@@ -281,7 +281,7 @@ async def handle_receive(bot: Bot, event: MessageEvent):
 
         asyncio.run_coroutine_threadsafe(askGPTT(Bot,event),newLoop)
 
-    elif glmReply == True or (trustglmReply == True and str(event.senderUin) in trustUser) or event.senderUin in chatGLMsingelUserKey.keys():
+    elif glmReply == True or (trustglmReply == True and str(event.senderUin) in trustUser) or event.senderUin in chatGLMapikeys:
         text = str(event.get_plaintext()).replace("@" + str(bot.qq) + "", '').replace(" ","")
         logger.info("分支1")
         for saa in noRes:
@@ -306,7 +306,7 @@ async def handle_receive(bot: Bot, event: MessageEvent):
 
         if event.senderUin in chatGLMsingelUserKey:
             logger.info("自有apiKey用户进行提问")
-            selfApiKey = chatGLMsingelUserKey.get(event.senderUin)
+            selfApiKey = chatGLMapikeys.get(event.senderUin)
             # 构建prompt
         # 或者开启了信任用户回复且为信任用户
         elif str(event.senderUin) in trustUser and trustglmReply == True:
@@ -343,7 +343,7 @@ async def handle_receive(bot: Bot, event: MessageEvent):
 
         except:
             await bot.send(event, "chatGLM启动出错，请联系master检查apiKey或重试")
-    elif ((str(event.peerUin) == str(mainGroup) and chatGLM_api_key!="sdfafjsadlf;aldf") or (event.peerUin in chatGLMapikeys)):
+    elif (str(event.peerUin) == str(mainGroup) and chatGLM_api_key!="sdfafjsadlf;aldf") or (event.peerUin in chatGLMapikeys)  :
         text = str(event.get_plaintext()).replace("@" + str(bot.qq) + "", '').replace(" ","")
         logger.info("分支2")
         for saa in noRes:
@@ -415,6 +415,7 @@ async def setChatGLMKey(bot: Bot, event: MessageEvent):
     global chatGLMapikeys
     key12=str(event.get_plaintext()).split("#")[1]+""
     try:
+        logger.info("设置了新的apiKey"+key12)
         prompt=[{"user":"你好"}]
         st1 = chatGLM1(key12, meta,prompt)
         #asyncio.run_coroutine_threadsafe(asyncchatGLM(key1, meta1, prompt, event, setName, text), newLoop)
@@ -423,6 +424,7 @@ async def setChatGLMKey(bot: Bot, event: MessageEvent):
     except:
         await bot.send(event, "chatGLM启动出错，请联系检查apiKey或重试")
         return
+    #logger.info(chatGLMapikeys)
     chatGLMapikeys[event.peerUin]=key12
     with open('config/chatGLM.yaml', 'w', encoding="utf-8") as file:
         yaml.dump(chatGLMapikeys, file, allow_unicode=True)
