@@ -281,7 +281,8 @@ async def handle_receive(bot: Bot, event: MessageEvent):
 
         asyncio.run_coroutine_threadsafe(askGPTT(Bot,event),newLoop)
 
-    elif (glmReply == True or (trustglmReply == True and str(event.senderUin) in trustUser) or event.senderUin in chatGLMsingelUserKey.keys()):
+    elif glmReply == True or (trustglmReply == True and str(event.senderUin) in trustUser) or event.senderUin in chatGLMsingelUserKey.keys():
+
         text = str(event.get_plaintext()).replace("@" + str(bot.qq) + "", '').replace(" ","")
         logger.info("分支1")
         for saa in noRes:
@@ -305,6 +306,7 @@ async def handle_receive(bot: Bot, event: MessageEvent):
         #logger.info("当前prompt"+str(prompt))
 
         if event.senderUin in chatGLMsingelUserKey:
+            logger.info("自有apiKey用户进行提问")
             selfApiKey = chatGLMsingelUserKey.get(event.senderUin)
             # 构建prompt
         # 或者开启了信任用户回复且为信任用户
@@ -555,7 +557,7 @@ async def askGPTT(bot,event):
         return response_message
     except:
         return "当前服务器负载过大，请稍后再试"
-        await bot.send(event, "当前服务器负载过大，请稍后再试")
+        #await bot.send(event, "当前服务器负载过大，请稍后再试")
 
 
 
