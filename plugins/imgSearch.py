@@ -36,7 +36,7 @@ async def test(url,proxies):
                 img.save(path)
         except:
             path="data/autoReply/imageReply/axaAaRaUaaafa7a.png"
-        return "traceMoe获取到结果："+sf+"\n============",path
+        return "\n============\ntraceMoe获取到结果："+sf,path
 async def test1(url,proxies):
     bovw = True  # 是否使用特征检索
     verify_ssl = True  # 是否校验 SSL 证书
@@ -63,7 +63,7 @@ async def test1(url,proxies):
                 img.save(path)
         except:
             path="data/autoReply/imageReply/axaAaRaUaaafa7a.png"
-        return "ascii2D获取到结果"+fs+"\n============",path
+        return "\n============\nascii2D获取到结果"+fs,path
 
 
 async def superSearch(url,proxies):
@@ -88,7 +88,7 @@ async def superSearch(url,proxies):
                 img.save(path)
         except:
             path="data/autoReply/imageReply/axaAaRaUaaafa7a.png"
-        return "iqdb获取到结果："+fs+"\n============",path
+        return "\n============\niqdb获取到结果："+fs,path
 
 async def test2(url,proxies,cookies):
     #cookies = 'ipb_session_id=bc4e5da825b5ad5325688bd5d6d5c21d; ipb_member_id=7584785; ipb_pass_hash=8e9aa8e90a14b059ba8ee70075120c17; sk=mua8zab26lmwo63gkcydsht8kslv'  # 注意：如果要使用 EXHentai 搜索，需要提供 cookies
@@ -117,7 +117,7 @@ async def test2(url,proxies,cookies):
 
     fs="标题："+str(resp.raw[0].title)+"\n"+"链接："+str(resp.raw[0].url)+"分类："+str(resp.raw[0].type)+"\n日期："+str(resp.raw[0].date)
     print(fs)
-    return "Ehentai:"+fs+"\n============",path
+    return "\n============\nEhentai:"+fs,path
 
 async def saucenoS(url,api_key,proxies):
     async with Network(proxies=proxies) as client:
@@ -138,7 +138,7 @@ async def saucenoS(url,api_key,proxies):
                 img.save(path)
         except:
             path="data/autoReply/imageReply/axaAaRaUaaafa7a.png"
-        return "sauceno获取到结果：\n"+str(resp.raw[0].origin).replace(",","\n")+"\n============",path
+        return "sauceno获取到结果：\n"+str(resp.raw[0].origin).replace(",","\n"),path
         #show_result(resp)
 
 
