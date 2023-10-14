@@ -303,10 +303,8 @@ async def handle_receive(bot: Bot, event: MessageEvent):
             prompt=[tep]
             chatGLMData[event.senderUin] =prompt
         #logger.info("当前prompt"+str(prompt))
-        if glmReply == True:
-            logger.info("glm全体开启模式")
-            selfApiKey = chatGLM_api_key
-        elif event.senderUin in chatGLMsingelUserKey:
+
+        if event.senderUin in chatGLMsingelUserKey:
             logger.info("自有apiKey用户进行提问")
             selfApiKey = chatGLMsingelUserKey.get(event.senderUin)
             # 构建prompt
@@ -315,9 +313,7 @@ async def handle_receive(bot: Bot, event: MessageEvent):
             logger.info("信任用户进行chatGLM提问")
             selfApiKey = chatGLM_api_key
         else:
-            logger.info("不符合匹配条件")
-            return
-            #selfApiKey = chatGLM_api_key
+            selfApiKey = chatGLM_api_key
 
         #获取角色设定
         if event.senderUin in chatGLMCharacters:
