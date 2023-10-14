@@ -439,12 +439,19 @@ async def setChatGLMKey(bot: Bot, event: MessageEvent):
 
 @delGLMKey.handle()
 async def setChatGLMKey(bot: Bot, event: MessageEvent):
-    global chatGLMapikeys
-    if event.peerUin in chatGLMapikeys:
-        chatGLMapikeys.pop(event.peerUin)
-        with open('config/chatGLM.yaml', 'w', encoding="utf-8") as file:
-            yaml.dump(chatGLMapikeys, file, allow_unicode=True)
-        await bot.send(event, "取消apiKey成功")
+    global chatGLMapikeys,chatGLMsingelUserKey
+    if event.is_group:
+        if event.peerUin in chatGLMapikeys:
+            chatGLMapikeys.pop(event.peerUin)
+            with open('config/chatGLM.yaml', 'w', encoding="utf-8") as file:
+                yaml.dump(chatGLMapikeys, file, allow_unicode=True)
+            await bot.send(event, "取消apiKey成功")
+        if event.senderUin in chatGLMsingelUserKey:
+            chatGLMsingelUserKey.pop(event.senderUin)
+            with open('config/chatGLMSingelUser.yaml', 'w', encoding="utf-8") as file:
+                yaml.dump(chatGLMsingelUserKey, file, allow_unicode=True)
+            await bot.send(event, "设置apiKey成功")
+
         
 @chatGPTReply.handle()
 async def pandoraSever(bot: Bot, event: MessageEvent):
