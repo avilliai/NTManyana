@@ -14,7 +14,7 @@ driver.register_adapter(ConsoleAdapter)
 #nonebot.load_builtin_plugins("echo")  # 内置插件
 # nonebot.load_plugin("thirdparty_plugin")  # 第三方插件
 #nonebot.load_plugins("plugins")  # 本地插件
-#nonebot.load_plugin(Path("run\\test.py"))
+nonebot.load_plugin(Path("run\\test.py"))
 nonebot.load_plugin(Path("run/aiReply.py"))
 nonebot.load_plugin(Path("run/singleModule.py"))
 nonebot.load_plugin(Path("run/imgSearch.py"))

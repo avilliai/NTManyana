@@ -1,7 +1,7 @@
 import asyncio
 import random
 from io import BytesIO
-
+from pathlib import Path
 
 import httpx
 from PIL import Image
@@ -20,7 +20,7 @@ async def test(url,proxies):
     async with Network(proxies=proxies) as client:
         tracemoe = TraceMoe(client=client, mute=False, size=None)
         #resp = await tracemoe.search(url=url)
-        resp = await tracemoe.search(file=url)
+        resp = await tracemoe.search(file=url.replace(r"\\","/"))
         sf="相似度："+str(resp.raw[0].similarity)+"\n名称："+str(resp.raw[0].title_romaji)+"/"+str(resp.raw[0].title_english)+"/"+str(resp.raw[0].title_chinese)+"\n源文件："+str(resp.raw[0].filename)+"\n链接1："+str(resp.raw[0].image)+"\n链接2:"+str(resp.raw[0].video)
         #返回数据与封面
         proxie2 = {
@@ -36,14 +36,14 @@ async def test(url,proxies):
                 img.save(path)
         except:
             path="data/autoReply/imageReply/axaAaRaUaaafa7a.png"
-        return sf,path
+        return "traceMoe获取到结果："+sf+"\n============",path
 async def test1(url,proxies):
     bovw = True  # 是否使用特征检索
     verify_ssl = True  # 是否校验 SSL 证书
     async with Network(proxies=proxies,verify_ssl=verify_ssl) as client:
         ascii2d = Ascii2D(client=client, bovw=bovw)
         #resp = await ascii2d.search(url=url)
-        resp = await ascii2d.search(file=url)
+        resp = await ascii2d.search(file=url.replace(r"\\","/"))
         #show_result(resp)
         selected = next((i for i in resp.raw if i.title or i.url_list), resp.raw[0])
         # logger.info(selected.origin)
@@ -63,14 +63,16 @@ async def test1(url,proxies):
                 img.save(path)
         except:
             path="data/autoReply/imageReply/axaAaRaUaaafa7a.png"
-        return fs,path
+        return "ascii2D获取到结果"+fs+"\n============",path
 
 
 async def superSearch(url,proxies):
     async with Network(proxies=proxies) as client:
         iqdb = Iqdb(client=client)
         #resp = await iqdb.search(url=url)
-        resp = await iqdb.search(file=url)
+        print("=====================")
+        print(url)
+        resp = await iqdb.search(file=url.replace(r"\\","/"))
         fs=f"模式: {resp.raw[0].content}"+"\n"+f"来源地址: {resp.raw[0].url}"+"\n"+f"相似度: {resp.raw[0].similarity}"+"\n"+f"图片大小: {resp.raw[0].size}"+"\n"+f"图片来源: {resp.raw[0].source}"+"\n"+f"其他图片来源: {resp.raw[0].other_source}"+"\n"+f"SauceNAO搜图链接: {resp.saucenao_url}"+"\n"+f"Ascii2d搜图链接: {resp.ascii2d_url}"+"\n"+f"TinEye搜图链接: {resp.tineye_url}"+"\n"+f"Google搜图链接: {resp.google_url}"
         #print(fs)
         proxie2 = {
@@ -86,7 +88,7 @@ async def superSearch(url,proxies):
                 img.save(path)
         except:
             path="data/autoReply/imageReply/axaAaRaUaaafa7a.png"
-        return fs,path
+        return "iqdb获取到结果："+fs+"\n============",path
 
 async def test2(url,proxies,cookies):
     #cookies = 'ipb_session_id=bc4e5da825b5ad5325688bd5d6d5c21d; ipb_member_id=7584785; ipb_pass_hash=8e9aa8e90a14b059ba8ee70075120c17; sk=mua8zab26lmwo63gkcydsht8kslv'  # 注意：如果要使用 EXHentai 搜索，需要提供 cookies
@@ -96,7 +98,7 @@ async def test2(url,proxies,cookies):
     async with Network(proxies=proxies, cookies=cookies, timeout=timeout) as client:
         ehentai = EHentai(client=client)
         #resp = await ehentai.search(url=url, ex=ex)
-        resp = await ehentai.search(file=url, ex=ex)
+        resp = await ehentai.search(file=url.replace(r"\\","/"), ex=ex)
         proxie2 = {
             "http://": proxies,
             "https://": proxies
@@ -115,13 +117,13 @@ async def test2(url,proxies,cookies):
 
     fs="标题："+str(resp.raw[0].title)+"\n"+"链接："+str(resp.raw[0].url)+"分类："+str(resp.raw[0].type)+"\n日期："+str(resp.raw[0].date)
     print(fs)
-    return fs,path
+    return "Ehentai:"+fs+"\n============",path
 
 async def saucenoS(url,api_key,proxies):
     async with Network(proxies=proxies) as client:
         saucenao = SauceNAO(client=client, api_key=api_key, hide=3)
         #resp = await saucenao.search(url=url)
-        resp = await saucenao.search(file=url)
+        resp = await saucenao.search(file=url.replace(r"\\","/"))
         print(str(resp.raw[0].origin).replace(",","\n"))
         proxie2 = {
             "http://": proxies,
@@ -136,7 +138,7 @@ async def saucenoS(url,api_key,proxies):
                 img.save(path)
         except:
             path="data/autoReply/imageReply/axaAaRaUaaafa7a.png"
-        return str(resp.raw[0].origin).replace(",","\n"),path
+        return "sauceno获取到结果：\n"+str(resp.raw[0].origin).replace(",","\n")+"\n============",path
         #show_result(resp)
 
 
@@ -170,5 +172,6 @@ def get_headers():
     return headers
 
 if __name__ == "__main__":
-    asyncio.run(saucenoS("../data/pictures/wallpaper/$%PLMbU.png","b1f018dbf8b7c21c38b4sdfadfsadfd9ad0211f8db1c4eaf20","http://127.0.0.1:1080"))
+
+    asyncio.run(saucenoS(Path("C:\\Users\\DEII\\Documents\\Tencent Files\\3377428814\\nt_qq\\nt_data\\Pic\\2023-10\\Ori\\46fc710e46d18b771343903e837eff71.jpg"),"b1f018dbf8b7c21c38b4d9ad0211f8db1c4eaf20","http://127.0.0.1:1080"))
 
