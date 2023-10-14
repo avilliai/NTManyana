@@ -281,7 +281,7 @@ async def handle_receive(bot: Bot, event: MessageEvent):
 
         asyncio.run_coroutine_threadsafe(askGPTT(Bot,event),newLoop)
 
-    elif glmReply == True or (trustglmReply == True and str(event.senderUin) in trustUser) or event.senderUin in chatGLMapikeys:
+    elif glmReply == True or (trustglmReply == True and str(event.senderUin) in trustUser) or event.senderUin in chatGLMsingelUserKey:
         text = str(event.get_plaintext()).replace("@" + str(bot.qq) + "", '').replace(" ","")
         logger.info("分支1")
         for saa in noRes:
@@ -412,10 +412,10 @@ async def clearPrompt(bot: Bot, event: MessageEvent):
 
 @setGLMKey.handle()
 async def setChatGLMKey(bot: Bot, event: MessageEvent):
-    global chatGLMapikeys
+    global chatGLMapikeys,chatGLMsingelUserKey
     key12=str(event.get_plaintext()).split("#")[1]+""
     try:
-        logger.info("设置了新的apiKey"+key12)
+
         prompt=[{"user":"你好"}]
         st1 = chatGLM1(key12, meta,prompt)
         #asyncio.run_coroutine_threadsafe(asyncchatGLM(key1, meta1, prompt, event, setName, text), newLoop)
@@ -425,9 +425,16 @@ async def setChatGLMKey(bot: Bot, event: MessageEvent):
         await bot.send(event, "chatGLM启动出错，请联系检查apiKey或重试")
         return
     #logger.info(chatGLMapikeys)
-    chatGLMapikeys[event.peerUin]=key12
-    with open('config/chatGLM.yaml', 'w', encoding="utf-8") as file:
-        yaml.dump(chatGLMapikeys, file, allow_unicode=True)
+    if event.is_group:
+        logger.info("群聊"+str(event.peerUin)+"设置了新的apiKey" + key12)
+        chatGLMapikeys[event.peerUin]=key12
+        with open('config/chatGLM.yaml', 'w', encoding="utf-8") as file:
+            yaml.dump(chatGLMapikeys, file, allow_unicode=True)
+        #await bot.send(event, "设置apiKey成功")
+
+    chatGLMsingelUserKey[event.senderUin]=key12
+    with open('config/chatGLMSingelUser.yaml', 'w', encoding="utf-8") as file:
+        yaml.dump(chatGLMsingelUserKey, file, allow_unicode=True)
     await bot.send(event, "设置apiKey成功")
 
 @delGLMKey.handle()
