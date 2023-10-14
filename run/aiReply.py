@@ -282,7 +282,6 @@ async def handle_receive(bot: Bot, event: MessageEvent):
         asyncio.run_coroutine_threadsafe(askGPTT(Bot,event),newLoop)
 
     elif glmReply == True or (trustglmReply == True and str(event.senderUin) in trustUser) or event.senderUin in chatGLMsingelUserKey.keys():
-
         text = str(event.get_plaintext()).replace("@" + str(bot.qq) + "", '').replace(" ","")
         logger.info("分支1")
         for saa in noRes:
@@ -304,8 +303,10 @@ async def handle_receive(bot: Bot, event: MessageEvent):
             prompt=[tep]
             chatGLMData[event.senderUin] =prompt
         #logger.info("当前prompt"+str(prompt))
-
-        if event.senderUin in chatGLMsingelUserKey:
+        if glmReply == True:
+            logger.info("glm全体开启模式")
+            selfApiKey = chatGLM_api_key
+        elif event.senderUin in chatGLMsingelUserKey:
             logger.info("自有apiKey用户进行提问")
             selfApiKey = chatGLMsingelUserKey.get(event.senderUin)
             # 构建prompt
@@ -314,7 +315,9 @@ async def handle_receive(bot: Bot, event: MessageEvent):
             logger.info("信任用户进行chatGLM提问")
             selfApiKey = chatGLM_api_key
         else:
-            selfApiKey = chatGLM_api_key
+            logger.info("不符合匹配条件")
+            return
+            #selfApiKey = chatGLM_api_key
 
         #获取角色设定
         if event.senderUin in chatGLMCharacters:
