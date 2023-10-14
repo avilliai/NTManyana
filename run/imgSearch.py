@@ -55,92 +55,95 @@ async def startYourSearch(bot: Bot, event: MessageEvent):
 @searchImg2.handle()
 async def imgSearcher(bot: Bot, event: MessageEvent):
     global dataGet
-    if ("搜图" in str(event.get_plaintext() and "img" in event.json()) or int(event.senderUin) in dataGet):
-        pat=""
-        for i in event.original_message:
-            print(i)
-            if i.type=="image":
-                #print("打印path")
-                logger.info("获取到path="+i.data.get("path"))
-                pat=i.data.get("path").replace(r"\\","/")
-                logger.warning(pat)
-        if pat=="":
-            return
-        s = await bot.fetch_media(event.msgId, ChatType(2), event.peerUid, event.elements[0].elementId, 0, 2)
-        img = Image.open(BytesIO(s))  # 从二进制数据创建图片对象
-        pat = "data/pictures/cache/" + random_str() + ".png"
-        img.save(pat)
-        logger.info("接收来自群："+str(int(event.peerUin))+" 用户："+str(int(event.senderUin))+" 的搜图指令")
-        dataGet[int(event.senderUin)]=[]
+    try:
+        if ("搜图" in str(event.get_plaintext() and "img" in event.json()) or int(event.senderUin) in dataGet):
+            pat=""
+            for i in event.original_message:
+                print(i)
+                if i.type=="image":
+                    #print("打印path")
+                    logger.info("获取到path="+i.data.get("path"))
+                    pat=i.data.get("path").replace(r"\\","/")
+                    logger.warning(pat)
+            if pat=="":
+                return
+            s = await bot.fetch_media(event.msgId, ChatType(2), event.peerUid, event.elements[0].elementId, 0, 2)
+            img = Image.open(BytesIO(s))  # 从二进制数据创建图片对象
+            pat = "data/pictures/cache/" + random_str() + ".png"
+            img.save(pat)
+            logger.info("接收来自群："+str(int(event.peerUin))+" 用户："+str(int(event.senderUin))+" 的搜图指令")
+            dataGet[int(event.senderUin)]=[]
 
-        img_url = pat
+            img_url = pat
 
-        # Replace the key with your own
-        logger.info("发起搜图请求")
-        await bot.send(event,"正在检索....请稍候")
-        #sauceno搜图
+            # Replace the key with your own
+            logger.info("发起搜图请求")
+            await bot.send(event,"正在检索....请稍候")
+            #sauceno搜图
 
 
-        try:
-            result, piccc = await saucenoS(url=img_url, api_key=api_key,proxies=proxy)
-            #logger.info("sauceno获取到结果：" + result)
+            try:
+                result, piccc = await saucenoS(url=img_url, api_key=api_key,proxies=proxy)
+                #logger.info("sauceno获取到结果：" + result)
 
-            dataGet.get(int(event.senderUin)).append(result)
-            dataGet.get(int(event.senderUin)).append(MessageSegment.image(Path(piccc)))
-                #await bot.send(event,' similarity:'+str(response.json().get("results")[0].get('header').get('similarity'))+"\n"+str(response.json().get("results")[0].get('data')).replace(",","\n").replace("{"," ").replace("}","").replace("'","").replace("[","").replace("]",""),True)
-        except:
-            logger.error("sauceno搜图失败")
+                dataGet.get(int(event.senderUin)).append(result)
+                dataGet.get(int(event.senderUin)).append(MessageSegment.image(Path(piccc)))
+                    #await bot.send(event,' similarity:'+str(response.json().get("results")[0].get('header').get('similarity'))+"\n"+str(response.json().get("results")[0].get('data')).replace(",","\n").replace("{"," ").replace("}","").replace("'","").replace("[","").replace("]",""),True)
+            except:
+                logger.error("sauceno搜图失败")
 
-        #使用TraceMoe搜图
-        try:
-            result,piccc=await test(url=img_url,proxies=proxy)
-            #logger.info("TraceMoe获取到结果：" +result)
-            dataGet.get(int(event.senderUin)).append(result)
-            dataGet.get(int(event.senderUin)).append(MessageSegment.image(Path(piccc)))
-            # await bot.send(event,' similarity:'+str(response.json().get("results")[0].get('header').get('similarity'))+"\n"+str(response.json().get("results")[0].get('data')).replace(",","\n").replace("{"," ").replace("}","").replace("'","").replace("[","").replace("]",""),True)
-        except:
-            logger.error("TraceMoe搜图失败，无结果或访问次数过多，请稍后再试")
+            #使用TraceMoe搜图
+            try:
+                result,piccc=await test(url=img_url,proxies=proxy)
+                #logger.info("TraceMoe获取到结果：" +result)
+                dataGet.get(int(event.senderUin)).append(result)
+                dataGet.get(int(event.senderUin)).append(MessageSegment.image(Path(piccc)))
+                # await bot.send(event,' similarity:'+str(response.json().get("results")[0].get('header').get('similarity'))+"\n"+str(response.json().get("results")[0].get('data')).replace(",","\n").replace("{"," ").replace("}","").replace("'","").replace("[","").replace("]",""),True)
+            except:
+                logger.error("TraceMoe搜图失败，无结果或访问次数过多，请稍后再试")
 
-            # b1 = ForwardMessageNode(sender_id=bot.qq, sender_name="Manyana",message_chain=MessageChain([result, Image(url=urlss]))
-            #dataGet.get(int(event.senderUin)).append("TraceMoe搜图失败，无结果或访问次数过多，请稍后再试")
-        #使用Ascii2D
-        try:
-            result,piccc=await test1(url=img_url,proxies=proxy)
-            #logger.info("Ascii2D获取到结果：\n" +result)
-            dataGet.get(int(event.senderUin)).append(result)
-            dataGet.get(int(event.senderUin)).append(MessageSegment.image(Path(piccc)))
-            # await bot.send(event,' similarity:'+str(response.json().get("results")[0].get('header').get('similarity'))+"\n"+str(response.json().get("results")[0].get('data')).replace(",","\n").replace("{"," ").replace("}","").replace("'","").replace("[","").replace("]",""),True)
-        except:
-            logger.error("Ascii2D搜图失败，无结果或访问次数过多，请稍后再试")
+                # b1 = ForwardMessageNode(sender_id=bot.qq, sender_name="Manyana",message_chain=MessageChain([result, Image(url=urlss]))
+                #dataGet.get(int(event.senderUin)).append("TraceMoe搜图失败，无结果或访问次数过多，请稍后再试")
+            #使用Ascii2D
+            try:
+                result,piccc=await test1(url=img_url,proxies=proxy)
+                #logger.info("Ascii2D获取到结果：\n" +result)
+                dataGet.get(int(event.senderUin)).append(result)
+                dataGet.get(int(event.senderUin)).append(MessageSegment.image(Path(piccc)))
+                # await bot.send(event,' similarity:'+str(response.json().get("results")[0].get('header').get('similarity'))+"\n"+str(response.json().get("results")[0].get('data')).replace(",","\n").replace("{"," ").replace("}","").replace("'","").replace("[","").replace("]",""),True)
+            except:
+                logger.error("Ascii2D搜图失败，无结果或访问次数过多，请稍后再试")
 
-            # b1 = ForwardMessageNode(sender_id=bot.qq, sender_name="Manyana",message_chain=MessageChain([result, Image(url=urlss]))
-            #dataGet.get(int(event.senderUin)).append("Ascii2D搜图失败，无结果或访问次数过多，请稍后再试")
+                # b1 = ForwardMessageNode(sender_id=bot.qq, sender_name="Manyana",message_chain=MessageChain([result, Image(url=urlss]))
+                #dataGet.get(int(event.senderUin)).append("Ascii2D搜图失败，无结果或访问次数过多，请稍后再试")
 
-        # 使用IQDB
-        try:
-            result, piccc = await superSearch(url=img_url, proxies=proxy)
-            logger.info("iqdb获取到结果：\n" + result)
-            dataGet.get(int(event.senderUin)).append(result)
-            dataGet.get(int(event.senderUin)).append(MessageSegment.image(Path(piccc)))
-            # await bot.send(event,' similarity:'+str(response.json().get("results")[0].get('header').get('similarity'))+"\n"+str(response.json().get("results")[0].get('data')).replace(",","\n").replace("{"," ").replace("}","").replace("'","").replace("[","").replace("]",""),True)
-        except:
-            logger.error("iqdb搜图失败，无结果或访问次数过多，请稍后再试")
-            #dataGet.get(int(event.senderUin)).append(result)
-            # b1 = ForwardMessageNode(sender_id=bot.qq, sender_name="Manyana",message_chain=MessageChain([result, Image(url=urlss]))
-            #dataGet.get(int(event.senderUin)).append("iqdb搜图失败，无结果或访问次数过多，请稍后再试")
-        # 使用E-hentai
-        try:
-            result, piccc = await test2(url=img_url, proxies=proxy,cookies=cookies)
-            logger.info("E-hentai获取到结果：" + result)
-            dataGet.get(int(event.senderUin)).append(result)
-            dataGet.get(int(event.senderUin)).append(MessageSegment.image(Path(piccc)))
-            # await bot.send(event,' similarity:'+str(response.json().get("results")[0].get('header').get('similarity'))+"\n"+str(response.json().get("results")[0].get('data')).replace(",","\n").replace("{"," ").replace("}","").replace("'","").replace("[","").replace("]",""),True)
-        except:
-            logger.error("E-hentai搜图失败，无结果或访问次数过多，请稍后再试")
-            #dataGet.get(int(event.senderUin)).append(result)
-            # b1 = ForwardMessageNode(sender_id=bot.qq, sender_name="Manyana",message_chain=MessageChain([result, Image(url=urlss]))
-            # dataGet.get(int(event.senderUin)).append("iqdb搜图失败，无结果或访问次数过多，请稍后再试")'''
-        await bot.send(event,(dataGet.get(int(event.senderUin))))
-        dataGet.pop(int(event.senderUin))
+            # 使用IQDB
+            try:
+                result, piccc = await superSearch(url=img_url, proxies=proxy)
+                logger.info("iqdb获取到结果：\n" + result)
+                dataGet.get(int(event.senderUin)).append(result)
+                dataGet.get(int(event.senderUin)).append(MessageSegment.image(Path(piccc)))
+                # await bot.send(event,' similarity:'+str(response.json().get("results")[0].get('header').get('similarity'))+"\n"+str(response.json().get("results")[0].get('data')).replace(",","\n").replace("{"," ").replace("}","").replace("'","").replace("[","").replace("]",""),True)
+            except:
+                logger.error("iqdb搜图失败，无结果或访问次数过多，请稍后再试")
+                #dataGet.get(int(event.senderUin)).append(result)
+                # b1 = ForwardMessageNode(sender_id=bot.qq, sender_name="Manyana",message_chain=MessageChain([result, Image(url=urlss]))
+                #dataGet.get(int(event.senderUin)).append("iqdb搜图失败，无结果或访问次数过多，请稍后再试")
+            # 使用E-hentai
+            try:
+                result, piccc = await test2(url=img_url, proxies=proxy,cookies=cookies)
+                logger.info("E-hentai获取到结果：" + result)
+                dataGet.get(int(event.senderUin)).append(result)
+                dataGet.get(int(event.senderUin)).append(MessageSegment.image(Path(piccc)))
+                # await bot.send(event,' similarity:'+str(response.json().get("results")[0].get('header').get('similarity'))+"\n"+str(response.json().get("results")[0].get('data')).replace(",","\n").replace("{"," ").replace("}","").replace("'","").replace("[","").replace("]",""),True)
+            except:
+                logger.error("E-hentai搜图失败，无结果或访问次数过多，请稍后再试")
+                #dataGet.get(int(event.senderUin)).append(result)
+                # b1 = ForwardMessageNode(sender_id=bot.qq, sender_name="Manyana",message_chain=MessageChain([result, Image(url=urlss]))
+                # dataGet.get(int(event.senderUin)).append("iqdb搜图失败，无结果或访问次数过多，请稍后再试")'''
+            await bot.send(event,(dataGet.get(int(event.senderUin))))
+            dataGet.pop(int(event.senderUin))
+    except:
+        pass
 
 
