@@ -205,7 +205,7 @@ async def handle_receive(bot: Bot, event: MessageEvent):
 
         logger.info("chatGLM接收提问:" + text)
         try:
-            logger.info("当前meta:"+str(meta1))
+            #logger.info("当前meta:"+str(meta1))
             asyncio.run_coroutine_threadsafe(asyncchatGLM(bot,selfApiKey, meta1, prompt, event, setName, text), newLoop)
             #st1 = await chatGLM(selfApiKey, meta1, prompt)
 
@@ -254,7 +254,7 @@ async def handle_receive(bot: Bot, event: MessageEvent):
 
         logger.info("chatGLM接收提问:" + text)
         #获取apiKey
-        logger.info("当前meta:"+str(meta1))
+        #logger.info("当前meta:"+str(meta1))
         if str(int(event.peerUin)) == str(mainGroup):
             key1 = chatGLM_api_key
         else:
