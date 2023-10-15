@@ -1,13 +1,18 @@
 import asyncio
 from asyncio import sleep
 
+import func_timeout
 from selenium import webdriver
-def webScreenShoot(url,path,width=1200,height=7500):
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
+
+
+async def webScreenShoot(url,path,width=1200,height=900):
     browser = webdriver.Firefox()
     url = url
     browser.set_window_size(width,height)
     browser.get(url)
-
+    await sleep(2)
     browser.save_screenshot(path)
     browser.close()
 
@@ -18,7 +23,7 @@ def webScreenShoot(url,path,width=1200,height=7500):
 
 import time
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+
 from PIL import Image
 
 
@@ -49,13 +54,15 @@ async def screenshot_to_pdf_and_png(link,path,waitT=1):
                 #print(js_move)
                 driver.execute_script(js_move)
                 await sleep(0.2)
+
                 height = driver.execute_script(js_height)
                 k += 1
             else:
                 break
 
-        await sleep(1)
-
+        await sleep(1) ##app > div.content > div > div > div.bili-dyn-item__main
+        #document.querySelector("#app > div.content > div > div > div.bili-dyn-item__main")
+        #/html/body/div[2]/div[3]/div/div/div[1]
         # 7>  # 直接截图截不全，调取最大网页截图
         width = driver.execute_script(
             "return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);")
@@ -79,10 +86,33 @@ async def screenshot_to_pdf_and_png(link,path,waitT=1):
 
     except Exception as e:
         print(e)
+@func_timeout.func_set_timeout(10)
+async def BiliDynamicsScreen(url,path):
+    # 导入selenium库
+
+    options = Options()
+    # 禁止弹出通知
+    options.add_argument("--disable-notifications")
+    # 禁止弹出其他类型的悬浮窗
+
+    # 创建一个Chrome浏览器对象
+    driver = webdriver.Firefox(options)
+
+    # 打开一个网页
+    driver.get(url)
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight / 2)")
+    # 定位目标元素，这里以#app > div.content > div > div > div.bili-dyn-item__main为例
+    element = driver.find_element(by=By.CSS_SELECTOR, value='#app > div.content > div > div > div.bili-dyn-item__main')
+    await sleep(2)
+    # 对目标元素进行截图，并保存为png文件
+    element.screenshot(path)
+
+    # 关闭浏览器
+    driver.quit()
+    return path
 
 
 if __name__ == '__main__':
-    asyncio.run(screenshot_to_pdf_and_png("https://prts.wiki/w/波登可","./test.png"))
-    #asyncio.run(screenshot_to_pdf_and_png("https://prts.wiki/w/斯卡蒂", "./test.png"))
+    #asyncio.run(screenshot_to_pdf_and_png("https://t.bilibili.com/852273854020583459","./test.png"))
+    asyncio.run(biliScreen("https://t.bilibili.com/852273854020583459","test.png"))
 
-    #webScreenShoot("https://prts.wiki/w/w","test.png",1200,7500)
