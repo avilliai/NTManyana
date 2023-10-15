@@ -70,6 +70,7 @@ async def dynamicsMonitor(bot: Bot, event: MessageEvent):
     current_timestamp = time.time()
     # 在当前的时间戳上加上300秒，即五分钟
     if five_minutes_later_timestamp=="" or current_timestamp>five_minutes_later_timestamp:
+        print("开始检测")
         five_minutes_later_timestamp = current_timestamp + waitTime
         for i in BiliTasks.keys():
             lat = await bilidynamics(i)
