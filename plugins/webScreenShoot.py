@@ -86,7 +86,7 @@ async def screenshot_to_pdf_and_png(link,path,waitT=1):
 
     except Exception as e:
         print(e)
-@func_timeout.func_set_timeout(10)
+@func_timeout.func_set_timeout(12)
 async def BiliDynamicsScreen(url,path):
     # 导入selenium库
 

@@ -74,12 +74,16 @@ async def dynamicsMonitor(bot: Bot, event: MessageEvent):
         for i in BiliTasks.keys():
             lat = await bilidynamics(i)
             if lat != BiliTasks.get(i).get("latestDynamics"):
-                BiliTasks[i]["latestDynamics"]=lat
-                with open('data/biliMonitor.yaml', 'w', encoding="utf-8") as file:
-                    yaml.dump(BiliTasks, file, allow_unicode=True)
+
                 groups = BiliTasks.get(i).get("group")
                 url = "https://t.bilibili.com/" + str(lat)
-                pat = await BiliDynamicsScreen(url, "data/pictures/cache/" + random_str() + ".png")
+                try:
+                    pat = await BiliDynamicsScreen(url, "data/pictures/cache/" + random_str() + ".png")
+                    BiliTasks[i]["latestDynamics"] = lat
+                    with open('data/biliMonitor.yaml', 'w', encoding="utf-8") as file:
+                        yaml.dump(BiliTasks, file, allow_unicode=True)
+                except:
+                    pass
                 for iss in groups:
                     try:
                         await bot.send_message(chat_type=ChatType(2),target=iss, message=MessageSegment.image(Path(pat)))
