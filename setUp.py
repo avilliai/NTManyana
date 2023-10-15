@@ -20,7 +20,8 @@ def main():
         if input("在这里输入:")!="1":
 
             os.system("pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/")
-            #os.system("pip install pandora-chatgpt")
+            os.system("pip install func_timeout")
+            os.system("pip install bilibili-api-python")
             #os.system("pip install --upgrade pandora-chatgpt")
             #os.system("pip install PicImageSearch")
             #os.system("pip install zhipuai")
