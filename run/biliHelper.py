@@ -79,11 +79,13 @@ async def dynamicsMonitor(bot: Bot, event: MessageEvent):
                 url = "https://t.bilibili.com/" + str(lat)
                 try:
                     pat = await BiliDynamicsScreen(url, "data/pictures/cache/" + random_str() + ".png")
+                    oll=0
+                except:
+                    oll=1
+                if oll==0:
                     BiliTasks[i]["latestDynamics"] = lat
                     with open('data/biliMonitor.yaml', 'w', encoding="utf-8") as file:
                         yaml.dump(BiliTasks, file, allow_unicode=True)
-                except:
-                    pass
                 for iss in groups:
                     try:
                         await bot.send_message(chat_type=ChatType(2),target=iss, message=MessageSegment.image(Path(pat)))
