@@ -19,7 +19,7 @@ nonebot.load_plugin(Path("run/aiReply.py"))
 nonebot.load_plugin(Path("run/singleModule.py"))
 nonebot.load_plugin(Path("run/imgSearch.py"))
 nonebot.load_plugin(Path("run/userSign.py"))
-nonebot.load_plugin(Path("run/biliHelper.py"))
+#nonebot.load_plugin(Path("run/biliHelper.py"))
 
 if __name__ == "__main__":
     nonebot.run()
