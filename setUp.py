@@ -22,6 +22,7 @@ def main():
             os.system("pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/")
             os.system("pip install func_timeout")
             os.system("pip install bilibili-api-python")
+            os.system("pip install aspose-words")
             #os.system("pip install --upgrade pandora-chatgpt")
             #os.system("pip install PicImageSearch")
             #os.system("pip install zhipuai")
