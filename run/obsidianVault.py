@@ -51,8 +51,11 @@ async def addSUB(bot: Bot, event: MessageEvent):
         path="data/pictures/cache/"+random_str()+".pdf"
         doc.save(path)
         print("over")
-        with open(path,"rb") as f:
-            await bot.upload(event,file=f.read())
+        fil=open(path,"rb")
+        sfa=fil.read()
+        by=sfa.encode()
+        await bot.upload(file=by)
+        fil.close()
 @order2.handle()
 async def addSUB(bot: Bot, event: MessageEvent):
     ass=os.listdir(obsidianVault+event.get_plaintext().replace("ls",""))
