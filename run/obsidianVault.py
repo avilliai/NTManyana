@@ -32,14 +32,16 @@ from nonebot.adapters.red.message import MessageSegment, Message
 from nonebot.rule import to_me, startswith
 
 order1=on_startswith("pdf ")
-
+order2=on_startswith("ls")
 
 with open('config/settings.yaml', 'r', encoding='utf-8') as f:
     settings = yaml.load(f.read(), Loader=yaml.FullLoader)
 obsidianVault=settings.get("obsidianVault")
-@obsidianVault.handle()
+@order1.handle()
 async def addSUB(bot: Bot, event: MessageEvent):
-    if os.path.exists(obsidianVault+"/"+event.get_plaintext().replace("pdf","")):
+    pa=obsidianVault+"/"+event.get_plaintext().replace("pdf","")
+    if os.path.exists(pa):
+        print(pa)
         import aspose.words as aw
 
         # 加载现有的 Markdown 文档
@@ -48,5 +50,10 @@ async def addSUB(bot: Bot, event: MessageEvent):
         # 将文档另存为 PDF
         path="data/pictures/cache/"+random_str()+".pdf"
         doc.save(path)
+        print("over")
         with open(path,"rb") as f:
             await bot.upload(event,file=f.read())
+@order2.handle()
+async def addSUB(bot: Bot, event: MessageEvent):
+    ass=os.listdir(obsidianVault+event.get_plaintext().replace("ls",""))
+    await bot.send(event,str(ass).replace(",","\n").replace("，","\n"))
