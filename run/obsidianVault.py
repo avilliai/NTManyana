@@ -39,7 +39,7 @@ with open('config/settings.yaml', 'r', encoding='utf-8') as f:
 obsidianVault=settings.get("obsidianVault")
 @order1.handle()
 async def addSUB(bot: Bot, event: MessageEvent):
-    pa=obsidianVault+"/"+event.get_plaintext().replace("pdf","")
+    pa=obsidianVault+"/"+event.get_plaintext().replace("pdf ","")
     if os.path.exists(pa):
         print(pa)
         import aspose.words as aw
