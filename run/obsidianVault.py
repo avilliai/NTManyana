@@ -46,15 +46,16 @@ async def addSUB(bot: Bot, event: MessageEvent):
 
         # 加载现有的 Markdown 文档
         doc = aw.Document(obsidianVault+"/"+event.get_plaintext().replace("pdf ",""))
-
+        saveOptions = aw.saving.PdfSaveOptions()
+        saveOptions.compliance = aw.saving.PdfCompliance.PDF17
         # 将文档另存为 PDF
         path="data/pictures/cache/"+random_str()+".pdf"
         doc.save(path)
         print("over")
         fil=open(path,"rb")
         sfa=fil.read()
-        by=sfa.encode()
-        await bot.upload(file=by)
+
+        await bot.upload(file=sfa)
         fil.close()
 @order2.handle()
 async def addSUB(bot: Bot, event: MessageEvent):
