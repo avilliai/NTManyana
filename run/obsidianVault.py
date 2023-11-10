@@ -45,7 +45,7 @@ async def addSUB(bot: Bot, event: MessageEvent):
         import aspose.words as aw
 
         # 加载现有的 Markdown 文档
-        doc = aw.Document(obsidianVault+"/"+event.get_plaintext().replace("pdf",""))
+        doc = aw.Document(obsidianVault+"/"+event.get_plaintext().replace("pdf ",""))
 
         # 将文档另存为 PDF
         path="data/pictures/cache/"+random_str()+".pdf"
