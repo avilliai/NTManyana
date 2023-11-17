@@ -86,8 +86,9 @@ async def screenshot_to_pdf_and_png(link,path,waitT=1):
 
     except Exception as e:
         print(e)
-@func_timeout.func_set_timeout(12)
-async def BiliDynamicsScreen(url,path):
+
+def BiliDynamicsScreen(lat,path):
+    url = "https://t.bilibili.com/" + str(lat)
     # 导入selenium库
 
     options = Options()
@@ -103,13 +104,13 @@ async def BiliDynamicsScreen(url,path):
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight / 2)")
     # 定位目标元素，这里以#app > div.content > div > div > div.bili-dyn-item__main为例
     element = driver.find_element(by=By.CSS_SELECTOR, value='#app > div.content > div > div > div.bili-dyn-item__main')
-    await sleep(2)
+    time.sleep(2)
     # 对目标元素进行截图，并保存为png文件
     element.screenshot(path)
 
     # 关闭浏览器
     driver.quit()
-    return path
+    return path,lat
 
 
 if __name__ == '__main__':

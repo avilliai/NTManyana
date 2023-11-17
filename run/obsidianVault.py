@@ -6,6 +6,7 @@ import random
 import subprocess
 import uuid
 from asyncio import sleep
+from io import BytesIO
 
 import httpx
 #import poe
@@ -19,6 +20,7 @@ from nonebot.params import CommandArg
 from plugins.PandoraChatGPT import ask_chatgpt
 from plugins.RandomStr import random_str
 from plugins.chatGLMonline import chatGLM1
+
 from plugins.newLogger import newLogger
 
 from plugins.rwkvHelper import rwkvHelper
@@ -31,7 +33,7 @@ from nonebot.adapters.red.event import MessageEvent
 from nonebot.adapters.red.message import MessageSegment, Message
 from nonebot.rule import to_me, startswith
 
-order1=on_startswith("pdf ")
+order1=on_startswith("get ")
 order2=on_startswith("ls")
 
 with open('config/settings.yaml', 'r', encoding='utf-8') as f:
@@ -39,24 +41,12 @@ with open('config/settings.yaml', 'r', encoding='utf-8') as f:
 obsidianVault=settings.get("obsidianVault")
 @order1.handle()
 async def addSUB(bot: Bot, event: MessageEvent):
-    pa=obsidianVault+"/"+event.get_plaintext().replace("pdf ","")
+    pa=obsidianVault+"/"+event.get_plaintext().replace("get ","")
     if os.path.exists(pa):
         print(pa)
-        import aspose.words as aw
-
-        # 加载现有的 Markdown 文档
-        doc = aw.Document(obsidianVault+"/"+event.get_plaintext().replace("pdf ",""))
-        saveOptions = aw.saving.PdfSaveOptions()
-        saveOptions.compliance = aw.saving.PdfCompliance.PDF17
-        # 将文档另存为 PDF
-        path="data/pictures/cache/"+random_str()+".pdf"
-        doc.save(path)
-        print("over")
-        fil=open(path,"rb")
-        sfa=fil.read()
-
-        await bot.upload(file=sfa)
-        fil.close()
+        await bot.send(event,MessageSegment.voice(Path("data/voices/2.wav")))
+        #await bot.send(event, MessageSegment.file(Path(pa)))
+        #fil.close()
 @order2.handle()
 async def addSUB(bot: Bot, event: MessageEvent):
     ass=os.listdir(obsidianVault+event.get_plaintext().replace("ls",""))
