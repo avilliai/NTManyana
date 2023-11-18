@@ -1,9 +1,11 @@
+import os
 from pathlib import Path
-
+import subprocess
 import nonebot
 from nonebot.adapters.red import Adapter as ConsoleAdapter  # 避免重复命名
 
 # 初始化 NoneBot
+
 nonebot.init()
 
 # 注册适配器
@@ -23,4 +25,9 @@ nonebot.load_plugin(Path("run/obsidianVault.py"))
 #nonebot.load_plugin(Path("run/biliHelper.py"))
 
 if __name__ == "__main__":
+    if "venv" in os.listdir():
+
+        subprocess.Popen(["venv/Scripts/python.exe", "flask_voice.py"], cwd="vits")
+    else:
+        subprocess.Popen(["python.exe", "flask_voice.py"], cwd="vits")
     nonebot.run()

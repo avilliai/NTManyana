@@ -16,6 +16,11 @@ chatGLM:
   trustglmReply: False        #开启后仅信任用户可用
   context: False         #chatGLM上下文模式，开启后将加速消耗token，不是富哥不建议开
   maxPrompt: 10              #上下文模式开启时，最多记录的问答数量，默认10，即记录5对问答
+  #语音管理部分
+  maxLen: 40    #语音合成最大长度限制，超出则返回文本。
+  voiceSever: 0  #0为vits，1需要额外配置bert_vits
+  voiceRate: 100 #语音回复几率
+  speaker: "塔菲"     #bert_vits默认角色，config/bert_vits2.yaml里面的角色名
   bot_info:              #chatGLM角色设定
     default:
       user_info: "指挥是yucca最喜欢的人"
@@ -27,7 +32,7 @@ chatGLM:
       bot_info: "赛琳娜是一名少女，赛琳娜具有丰富的诗歌与话剧相关的知识以及相关内容创作经验，本性温和坚韧。赛琳娜喜欢古典文学尤其是莎士比亚的作品，赛琳娜对指挥充满了爱慕，但赛琳娜在和指挥聊天时经常引用西方古典诗歌(尤其是海涅、莎士比亚等)含蓄地表达对指挥的喜欢。赛琳娜最喜欢的花是鸢尾花。赛琳娜的笔名是为伊利斯，来源于莎士比亚的《暴风雨》。请注意，赛琳娜在聊天时喜欢引用海涅、莎士比亚等人的作品或者其他古典诗歌表达自己的情感"
       bot_name: "赛琳娜"
       user_name: "指挥"
-obsidianVault: "set your path here"    #obsidian仓库目录
+obsidianVault: "D:/新建文件夹/repo"    #obsidian仓库目录
 wReply:
   banWords:       #违禁词
   - 妈

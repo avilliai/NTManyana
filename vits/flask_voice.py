@@ -1,13 +1,12 @@
-import asyncio
 import json
 
-from flask import Flask, request, jsonify
+from flask import Flask, request
 
 from MoeGoe import voiceGenerate
 
 app = Flask(__name__)
 
-@app.route('/synthesize', methods=['GET'])
+@app.route('/synthesize', methods=['POST'])
 async def synthesize():
     # 解析请求中的参数
     data = request.get_json()
@@ -33,4 +32,4 @@ async def synthesize():
     return out
     #return jsonify({'audio': audio.tolist()})
 if __name__ == '__main__':
-    app.run(debug=True,host='127.0.0.1', port=9080)
+    app.run(debug=True,host='127.0.0.1', port=9081)
