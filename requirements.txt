@@ -87,7 +87,7 @@ PyJWT==2.8.0
 pyperclip==1.8.2
 pypinyin==0.49.0
 pypng==0.20220715.0
-pyopenjtalk
+
 pyquery==2.0.0
 pyreadline3==3.4.1
 PySocks==1.7.1

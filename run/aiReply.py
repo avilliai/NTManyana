@@ -3,6 +3,7 @@ import asyncio
 import json
 import os
 import random
+import re
 import subprocess
 import uuid
 from asyncio import sleep
@@ -546,8 +547,11 @@ async def asyncchatGLM(bot,apiKey,bot_info,prompt,event,setName,text):
             data1["out"] = path
             await taffySayTest(data1)
         else:
+            pattern = r"\([^()]*\)|\[[^\[\]]*\]|\{[^{}]*\}|<[^<>]*>|（[^（）]*）"
+            # 使用空字符串替换所有匹配的结果
+            restt = re.sub(pattern, "", st1)
             path = '../data/voices/' + random_str() + '.wav'
-            text = await translate(str(st1), app_id, app_key)
+            text = await translate(str(restt), app_id, app_key)
             tex = '[JA]' + text + '[JA]'
             logger1.info("启动文本转语音：text: " + tex + " path: " + path[3:])
             await voiceGenerate({"text": tex, "out": path, "speaker": speaker, "modelSelect": modelSelect})
