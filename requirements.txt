@@ -63,8 +63,8 @@ nonebot-adapter-console==0.4.0
 nonebot-adapter-red==0.5.2
 nonebot2==2.1.1
 nonechat==0.2.1
-numba==0.57.1
-numpy==1.23.0
+numba==0.58.1
+numpy==1.26.2
 openpyxl==3.1.2
 outcome==1.2.0
 packaging==23.2

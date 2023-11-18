@@ -10,6 +10,6 @@ where python
 pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 pause
 cd ../..
-pip install -r requirements.txt
+pip install -r requirements.txt --no-dependencies
 rem 暂停显示结果
 pause
