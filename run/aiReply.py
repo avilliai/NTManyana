@@ -521,7 +521,7 @@ def chatGLM(api_key,bot_info,prompt,model1):
     return str1
 # 创建一个异步函数
 async def asyncchatGLM(bot,apiKey,bot_info,prompt,event,setName,text):
-
+    global chatGLMData
     logger1.info(prompt)
     loop = asyncio.get_event_loop()
     # 使用 loop.run_in_executor() 方法来将同步函数转换为异步非阻塞的方式进行处理
@@ -573,8 +573,8 @@ async def asyncchatGLM(bot,apiKey,bot_info,prompt,event,setName,text):
         logger1.info("chatGLM:" + st1)
     except:
         pass
-    if turnMessage==True and event.type=='FriendMessage' and int(event.senderUin)!=master:
-        await bot.send_friend_message(int(master),"chatGLM接收消息：\n来源:"+str(int(event.senderUin))+"\n提问:"+text+"\n回复:"+st1)
+    #if turnMessage==True and event.type=='FriendMessage' and int(event.senderUin)!=master:
+        #await bot.send_friend_message(int(master),"chatGLM接收消息：\n来源:"+str(int(event.senderUin))+"\n提问:"+text+"\n回复:"+st1)
     '''try:
         addStr = '添加' + text + '#' + st11
         mohuaddReplys(addStr, str("chatGLMReply"))
@@ -582,7 +582,7 @@ async def asyncchatGLM(bot,apiKey,bot_info,prompt,event,setName,text):
         logger1.error("写入本地词库失败")'''
     if context == True:
         # 更新该用户prompt
-        global chatGLMData
+
         prompt = chatGLMData.get(int(event.senderUin))
         prompt.append({"role": "assistant", "content": st1})
         # 超过10，移除第一个元素
