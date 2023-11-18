@@ -67,6 +67,7 @@ numba==0.57.1
 numpy==1.23.0
 openpyxl==3.1.2
 outcome==1.2.0
+openjtalk==0.3.0.dev3
 packaging==23.2
 Pandora-ChatGPT==1.3.4
 picimagesearch==3.9.5
@@ -86,6 +87,7 @@ PyJWT==2.8.0
 pyperclip==1.8.2
 pypinyin==0.49.0
 pypng==0.20220715.0
+pyopenjtalk
 pyquery==2.0.0
 pyreadline3==3.4.1
 PySocks==1.7.1
