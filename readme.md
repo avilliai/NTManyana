@@ -9,7 +9,7 @@
 ## 文字版
 - 下载NTM.rar
 - 安装压缩包里的QQ
-- 安装[LiteLoaderQQNT与chronocat](https://chronocat.vercel.app/install/llqqnt)
+- 安装[LiteLoaderQQNT](https://github.com/LiteLoaderQQNT/LiteLoaderQQNT/releases/tag/0.5.9) 与[chronocat](https://chronocat.vercel.app/install/llqqnt)
 - [获取token](https://chronocat.vercel.app/config/)
 - 用管理员身份运行NTM.exe
 - 输入1开始搭建
