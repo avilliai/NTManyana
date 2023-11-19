@@ -9,12 +9,13 @@
 ## 文字版
 - 下载NTM.rar
 - 安装压缩包里的QQ
-- 安装[LiteLoaderQQNT](https://github.com/LiteLoaderQQNT/LiteLoaderQQNT/releases/tag/0.5.9) 与[chronocat](https://chronocat.vercel.app/install/llqqnt)
-- [获取token](https://chronocat.vercel.app/config/)
+- 安装[LiteLoaderQQNT](https://github.com/LiteLoaderQQNT/LiteLoaderQQNT/releases/tag/0.5.9) 与[chronocat](https://chronocat.vercel.app/install/llqqnt) 
+- 安装LiteLoaderQQNT与chronocat的部分你也可以看[这里](https://blog.bingyue.top/2023/10/14/chronocat_1/)
+- 获取token: win+r输入%USERPROFILE%/.chronocat/config 即可查看token
 - 用管理员身份运行NTM.exe
 - 输入1开始搭建
 - 把获取的token填进NTM/.env
-- 双击main.py
+- 使用 启动脚本.bat
 ## 视频版
 下载HowToUse.mp4以参考<br>
 (HowToUse.mp4中，演示用的设备已经安装了对应的软件，所以跳过了，如果你没装这些软件就不要跳过)
